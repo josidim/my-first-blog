@@ -24,7 +24,7 @@
 <ul>
 <li><a href="#">Inicio</a></li>
 <li><a href="#">Validacao</a></li>
-<li><a href=#>Relatorios</a></li>
+<li><a href="#">Relatorios</a></li>
 
 </ul>
 
@@ -37,7 +37,7 @@
 
 <div class="config" >
 	
-<h1 align="center">Selecionar arquivo para validacao</h1>
+<h1 align="center">Selecionar arquivo </h1>
  <font color="red">Campos obrigatorios que estao vazios </font>
  <font color="blue">Tamanho do campo invalido </font>
  <font color="gren">Campo nao numerico </font>
@@ -59,7 +59,510 @@
 </section>
 
 </div>
- {{ posts }}
+ <script type="text/javascript">
+            
+            //Inicio:: Obtendo elementos da area de upload de arquivos   
+            const loadFile = document.getElementById("loadFile");
+            const fileList = document.getElementById("fileList");      
+            const errorList = document.getElementById("errorList"); 
+            //Fim          
+            
+                 
+            //Se o navegador e compativel com addEventListener          
+            if (loadFile.addEventListener) {     
+            
+               console.log("Usando addEventListener => compativel com todos os navegadores, exceto IE 8 e versoes anteriores");
+               
+               //Adiciona escuta ao evento change.  Todas as vezes que o botao id=loadFile for clicado e arquivos forem selecionados,
+               //o evento change e disparado e a funcao fileAction e chamada
+               loadFile.addEventListener("change", function(){ fileAction(this); } , false);
+               
+            } else if (loadFile.attachEvent) { //Caso contrario usa attachEvent para registrar eventos  
+            
+               console.log("Usando attachEvent => compativel com IE 8 e versoes anteriores");
+               
+               //Adiciona escuta ao evento change.  Todas as vezes que o botao id=loadFile for clicado e arquivos forem selecionados,
+               //o evento change e disparado e a funcao fileAction e chamada
+               loadFile.attachEvent("onchange", function(){ fileAction(this); });
+               
+            }
+         
+            //Funcao: fileAction
+            //Parametros: object = objecto file ou lista de objetos do tipo file
+            //Objetivo: disparada pelo evento change, esta funcao e encarregada de tratar toda a logica do upload
+            function fileAction(object) {
+                
+                //object.files pode representar:
+                //1- objeto File (em caso de selecao de apenas 1 arquivo)
+                //2- objeto FileList (em caso de selecao de mais de 1 arquivo)
+                let files = object.files;
+                let error = [];
+                
+                
+                
+                //Percorrendo a lista de objetos do tipo file
+                for (var i = 0, f; f = files[i]; i++) {
+                    
+                    addItem(f);
+                    
+                }
+                
+            }
+         
+            
+            //Funcao: addItem
+            //Parametros: currentFile = objeto file atual
+            //Objetivo: Exibe no navegador nome e tamanho de cada imagem selecionada
+            function addItem (currentFile) {
+        
+              const div = document.createElement("div");
+              const img = document.createElement("img");
+              let content = '';
+              
+              //Define um conjunto de estilos para o element div recem criado
+              div.className = "alert alert-warning alert-dismissible";
+              
+              //Cria o conteudo que sera exibido no navegador
+              content = "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>";
+              content += "<span aria-hidden='true'>&times;</span></button>";
+            
+              content += "<br><strong>" + currentFile.name + "</strong> - "; 
+              content += humanFileSize(currentFile.size, true);
+              //
+              
+              //Associa conteudo ao elemtno div
+              div.innerHTML = content;
+              
+              //Faz o append do conteudo na area que lista as imagens
+              fileList.appendChild(div); 
+                
+            }
+         
+         
+          //http://stackoverflow.com/questions/10420352/converting-file-size-in-bytes-to-human-readable
+          //Parameter si:  false = binary, true: decimal conversion
+        	function humanFileSize(bytes, si) {
+        	    var thresh = si ? 1000 : 1024;
+        	    if(bytes < thresh) return bytes + ' B';
+        	    var units = si ? ['kB','MB','GB','TB','PB','EB','ZB','YB'] : ['KiB','MiB','GiB','TiB','PiB','EiB','ZiB','YiB'];
+        	    var u = -1;
+        	    do {
+        	        bytes /= thresh;
+        	        ++u;
+        	    } while(bytes >= thresh);
+        	    return bytes.toFixed(1)+' '+units[u];
+        	}
+
+       </script>
+	   
+	   <script type="text/javascript">
+	   var leitorDeCSV = new FileReader()
+	   
+window.onload = function init() {
+    leitorDeCSV.onload = leCSV;
+}
+
+
+function pegaCSV(inputFile) {
+     var file = inputFile.files[0];
+     leitorDeCSV.readAsText(file);
+}
+
+
+function leCSV(evt) {
+
+  var fileArr = evt.target.result.split('\n');
+  var strDiv = '<table >';
+  var head = fileArr[0].split(';');
+ 
+
+
+strDiv += '<th>'+ head[0] + '</th>';
+
+strDiv += '<th>'+ head[1] + '</th>';
+
+strDiv += '<th>'+ head[2] + '</th>';
+
+strDiv += '<th>'+ head[3] + '</th>';
+
+strDiv += '<th>'+ head[4] + '</th>';
+
+strDiv += '<th>'+ head[5] + '</th>';
+
+strDiv += '<th>'+ head[6] + '</th>';
+
+strDiv += '<th>'+ head[7] + '</th>';
+
+strDiv += '<th>'+ head[8] + '</th>';
+
+strDiv += '<th>'+ head[9] + '</th>';
+
+strDiv += '<th>'+ head[10] + '</th>';
+
+strDiv += '<th>'+ head[11] + '</th>';
+
+strDiv += '<th>'+ head[12] + '</th>';
+
+strDiv += '<th>'+ head[13] + '</th>';
+
+strDiv += '<th>'+ head[14] + '</th>';
+
+strDiv += '<th>'+ head[15] + '</th>';
+
+strDiv += '<th>'+ head[16] + '</th>';
+
+strDiv += '<th>'+ head[17] + '</th>';
+
+strDiv += '<th>'+ head[18] + '</th>';
+
+
+strDiv += '<th>'+ "LINHA" + '</th>';
+
+/*
+VERMELHO - CAMPO OBRIGAToRIO VAZIO
+AZUL - CAMPO TAMANHO MAXIMO EXCEDIDO
+VERDE - CAMPO NaO NUMERICO
+
+*/
+
+
+  for (var i=1; i<fileArr.length; i++) {
+	  
+	
+       strDiv += '<tr>';
+       var fileLine = fileArr[i].split(';');
+		var codsetor, tipo, titulo, seglogr, quadra, face, endereco, modificador, comp1, val1, comp2, val2, comp3, val3, comp4, val4, comp5, val5, especie, linha;
+
+		 
+
+	  
+           for (var j=0; j<fileLine.length; j++) {
+		  	codsetor = fileLine[0];
+			tipo = fileLine[1];
+			titulo = fileLine[2];
+			seglogr = fileLine[3];
+			quadra = fileLine[4];
+			face = fileLine[5];
+			endereco = fileLine[6];
+			modificador = fileLine[7];
+			comp1 = fileLine[8];
+			val1 = fileLine[9];
+			comp2 = fileLine[10];
+			val2 = fileLine[11];
+			comp3 = fileLine[12];
+			val3 = fileLine[13];
+			comp4 = fileLine[14];
+			val4 = fileLine[15];
+			comp5 = fileLine[16];
+			val5 = fileLine[17];
+			especie = fileLine[18];
+		
+		
+		
+		
+		
+		
+		if(codsetor === '' || codsetor === ' ' || codsetor == 0){
+				fileLine[0] = '<font color="red">'+ codsetor + "Obrigatorio" +'</font>';
+			
+			
+		}else if(codsetor.length != 15){
+				fileLine[0] = '<font color="blue">'+ codsetor  +'</font>';
+		
+		}else if(!Number(codsetor)){
+				fileLine[0] = '<font color="gren">'+ codsetor  +'</font>';
+				
+			}//fim validacao codsetor
+		
+		
+		
+		
+		
+	
+					if(typeof(tipo) != "string" ){
+						fileLine[1] = '<font color="gren">'+ tipo +'</font>';
+						
+
+					}else if(  tipo.length > 30 ){
+						fileLine[1] = '<font color="blue">'+ tipo +'</font>';
+			 
+				 
+					}else if(tipo == 0 || tipo === "" || tipo === " " ){
+						fileLine[1] ='<font color="red">'+ tipo + 'Vazio' +'</font>';
+				
+			
+					}//	fim validacao campo tipo_seglogr
+					
+					
+					
+					
+
+						
+			if(typeof(titulo) != "string" ){
+						fileLine[2] = '<font color="gren">'+ titulo +'</font>';
+						
+
+			}else if(	titulo.length > 30  ){
+			fileLine[2] = '<font color="blue">'+ titulo +'</font>';
+			 
+		}//fim validacao coluna titulo_seglogr
+					
+				
+				
+				
+				
+				
+					
+		if(seglogr === ' ' || seglogr === "" || seglogr == 0){
+				fileLine[3] = '<font color="red">'+ seglogr + 'Campo Obrigatorio' +'</font>';
+			
+			
+		}else if(typeof(seglogr) != "string" ){
+				fileLine[3] = '<font color="gren">'+ seglogr +'</font>';
+						
+
+		}else if( seglogr.length > 60  ){
+				fileLine[3] = '<font color="blue">'+ seglogr +'</font>';
+			 
+				 
+		}//	fim validacao campo seglogr
+		
+		
+		
+		
+		
+		
+		
+				 
+				 
+				   if(quadra === '' || quadra === ' ' || quadra == 0){
+						fileLine[4] = '<font color="red">'+  quadra + "Vazio" +'</font>';
+			
+			
+					}else if(!Number(quadra)){
+						fileLine[4] = '<font color="gren">'+ quadra  +'</font>';
+				
+					}else if(quadra.length > 3){
+						fileLine[4] = '<font color="blue">'+ quadra +'</font>';
+		
+					}//fim validacao quadra
+				 
+				 
+				
+				
+				 
+				 
+				 
+				 
+		 	
+		if(face === '' || face === ' ' || face== 0){
+			fileLine[5] = '<font color="red">'+ face + "Branco" +'</font>';
+			
+			
+		}else if(!Number(face)){
+				fileLine[5] = '<font color="gren">'+ face +'</font>';
+				
+		}else if(face.length > 3){
+			fileLine[5] = '<font color="blue">'+ face +'</font>';
+		
+		}//fim validacao face
+				 		 
+				 
+				 
+				 
+				 
+					 
+								 
+		 	
+					if(endereco === '' || endereco === ' ' || endereco == 0){
+						fileLine[6] = '<font color="red">'+ endereco + "Vazio" +'</font>';
+			
+			
+					}else if(!Number(endereco)){
+						fileLine[6] = '<font color="gren">'+ endereco  +'</font>';
+					
+					}else if(endereco.length > 10){
+						fileLine[6] = '<font color="blue">'+ endereco +'</font>';
+		
+					}//fim validacao num_endereco
+				 		 
+				
+				 
+				   
+				 
+				 
+			if(typeof(modificador) != "string" ){
+						fileLine[7] = '<font color="gren">'+ modificador +'</font>';	 
+			}else if(	modificador.length > 7  ){
+			fileLine[7] = '<font color="blue">'+ modificador +'</font>';
+			 
+		}//fim validacao coluna dsc_modificador	 
+				 
+				 
+				 
+				 
+				 
+				 
+				 
+				 
+						if(typeof(comp1) != "string" ){
+							fileLine[8] = '<font color="gren">'+ comp1 +'</font>';	 
+						}else if(	comp1.length > 20  ){
+							fileLine[8] = '<font color="blue">'+ comp1 +'</font>';
+			 
+						}//fim validacao coluna complemento 1 
+				 
+				 
+				 
+				 
+			
+			if(typeof(val1) != "string" ){
+				fileLine[9] = '<font color="gren">'+ val1 +'</font>';	 
+			}else if(	val1.length > 10  ){
+				fileLine[9] = '<font color="blue">'+ val1 +'</font>';
+			 
+			}//fim validacao coluna valor complemento 1 	 
+				 
+				 
+				 
+				 
+				 
+				 
+			
+				 
+				 
+						if(typeof(comp2) != "string" ){
+							fileLine[10] = '<font color="gren">'+ comp2 +'</font>';	 
+						}else if(	comp2.length > 20  ){
+							fileLine[10] = '<font color="blue">'+ comp2 +'</font>';
+			 
+						}//fim validacao coluna complemento 2
+				 
+				 
+				 
+				 
+			
+			if(typeof(val2) != "string" ){
+				fileLine[11] = '<font color="gren">'+ val2 +'</font>';	 
+			}else if(	val2.length > 10  ){
+				fileLine[11] = '<font color="blue">'+ val2 +'</font>';
+			 
+			}//fim validacao coluna valor complemento 2 	 
+				 
+				 
+				 
+				 
+				 
+				 
+				 
+				 
+						if(typeof(comp3) != "string" ){
+							fileLine[12] = '<font color="gren">'+ comp3 +'</font>';	 
+						}else if(	comp3.length > 20  ){
+							fileLine[12] = '<font color="blue">'+ comp3 +'</font>';
+			 
+						}//fim validacao coluna complemento 3
+				 
+				 
+				 
+				 
+			
+			if(typeof(val3) != "string" ){
+				fileLine[13] = '<font color="gren">'+ val3 +'</font>';	 
+			}else if(	val3.length > 10  ){
+				fileLine[13] = '<font color="blue">'+ val3 +'</font>';
+			 
+			}//fim validacao coluna valor complemento 3	 
+				 
+				 
+				 
+				 
+				 
+				 
+					
+						if(typeof(comp4) != "string" ){
+							fileLine[14] = '<font color="gren">'+ comp4 +'</font>';	 
+						}else if(	comp4.length > 20  ){
+							fileLine[14] = '<font color="blue">'+ comp4 +'</font>';
+			 
+						}//fim validacao coluna complemento 4 
+				 
+				 
+				 
+				 
+			
+			if(typeof(val4) != "string" ){
+				fileLine[15] = '<font color="gren">'+ val4 +'</font>';	 
+			}else if(	val4.length > 10  ){
+				fileLine[15] = '<font color="blue">'+ val4 +'</font>';
+			 
+			}//fim validacao coluna valor complemento 4	 
+				 
+				 
+				 
+				 
+				 
+				 
+						if(typeof(comp5) != "string" ){
+							fileLine[16] = '<font color="gren">'+ comp5 +'</font>';	 
+						}else if(	comp5.length > 20  ){
+							fileLine[16] = '<font color="blue">'+ comp5 +'</font>';
+			 
+						}//fim validacao coluna complemento 1 
+				 
+				 
+				 
+				 
+			
+			if(typeof(val5) != "string" ){
+				fileLine[17] = '<font color="gren">'+ val5 +'</font>';	 
+			}else if(	val5.length > 10  ){
+				fileLine[17] = '<font color="blue">'+ val5 +'</font>';
+			 
+			}//fim validacao coluna valor complemento 1 	 
+				 
+				 
+				 
+				 
+				 
+				 
+				 
+				 	if(especie === '' || especie === ' ' || especie == 0){
+						fileLine[18] = '<font color="red">'+ "Vazio"  +'</font>';
+			
+			
+					}else if(especie != 13 && especie != 12 ){
+						fileLine[18] = '<font color="red">'+ especie  +'</font>';
+		
+					}//fim validacao cod_tipo_especie
+				 
+				 
+				
+				 
+					 strDiv += '<td>'+ fileLine[j] +'</td>';
+					
+				
+			
+					
+				 
+				
+		
+		
+		}//fim for contagem de colunas
+	  
+  
+				  strDiv += '<td>'+ (i+1) +'</td>';
+	
+      strDiv += '</tr>';
+  }//fim do for contagem de linhas
+
+      strDiv += '</table>';
+      var CSVsaida = document.getElementById('CSVsaida');
+      CSVsaida.innerHTML = strDiv;
+}//fim da funcao
+	   
+	   
+	   </script>
 </BODY>
 
 </HTML>

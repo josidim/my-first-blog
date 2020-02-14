@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<HTML lang="pt-BR">
+<HEAD>
+
+<TITLE> Página de Validação </TITLE>
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/folhadeestilo.css' %}">
+
+</HEAD>
+
+
+<BODY class="color-page">
+<div class="container-principal" id="topo">
+<header>
+<div clas="logo">
+<a href="" >
+<img src="{% static 'imagem/logo.png' %}" alt="logo site" >
+</a>
+</div>
+
+<nav>
+<ul>
+<li><a href="">Início</a></li>
+<!-- <li><a href="#">Validação</a></li> -->
+<!-- <li><a href=#>Relatórios</a></li> -->
+
+</ul>
+
+
+</header>
+
+
+
+<section id="section-code" >
+
+<div class="config" >
+
+
+<h1>Consulta ao Banco de Dados por arquivo CSV... </h1>
+
+
+
+<!-- <table align="center" cellpadding="3" style="font-family:Arial"> -->
+<!-- <tr> -->
+<!-- <th>Codigo</th> -->
+<!-- <th>Quadra</th> -->
+<!-- <th>Face</th> -->
+
+
+<!-- </tr> -->
+
+<!-- {% for item in check %} -->
+
+<!-- <tr> -->
+<!-- <td>{{ item.COD_SETOR }}</td> -->
+<!-- <td>{{ item.NUM_QUADRA }}</td> -->
+<!-- <td>{{ item.NUM_FACE }}</td> -->
+
+<!-- {% endfor %} -->
+
+
+<!-- </tr> -->
+<!-- <h5 > Total de registros validados: {{ total }}</h5> -->
+
+<!-- </table> -->
+
+<div class="alert-success" id="alert-success">
+Total de registros validados: {{ total }}
+</div>
+
+
+
+</div>
+
+</section>
+
+</div>
+
+
+</BODY>
+
+</HTML>

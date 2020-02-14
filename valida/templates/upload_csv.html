@@ -1,0 +1,101 @@
+{% load static %}
+<!DOCTYPE html>
+<HTML lang="pt-BR">
+<HEAD>
+
+<TITLE> Página de Validação </TITLE>
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/folhadeestilo.css' %}">
+
+</HEAD>
+
+
+<BODY class="color-page">
+<div class="container-principal" id="topo">
+<header>
+<div clas="logo">
+<a href="" >
+<img src="{% static 'imagem/logo.png' %}" alt="logo site" >
+</a>
+</div>
+
+<nav>
+<ul>
+<li><a href="">Início</a></li>
+<!-- <li><a href="#">Validação</a></li> -->
+<!-- <li><a href=#>Relatórios</a></li> -->
+
+</ul>
+
+
+</header>
+
+
+
+<section id="section-code" >
+
+<div class="config" >
+<h1>Selecionar arquivo para validação... </h1>
+
+ {% if messages %}
+        {% for message in messages %}
+           {% if message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
+            <div class="alert-info" id="alert-info">
+
+             {{message}}
+            </div>
+			{% endif %}
+			{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+            <div class="alert-warning" id="alert-warning">
+
+              {{message}}
+            </div>
+			{% endif %}
+			
+			{% if message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}
+            <div class="alert-warning" id="alert-warning"> 
+
+               {{message}}
+            </div>
+			{% endif %}
+			
+			{% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+            <div class="alert-success" id="alert-success">
+
+                {{message}}
+            </div>
+			{% endif %}
+        {% endfor %}
+{% else %}
+<form  method="POST" enctype="multipart/form-data" > 
+{% csrf_token %}
+<div>
+   
+    <div class="col-md-8">
+        <input type="file" name="file" id="file" required="True">
+    </div>                    
+</div>
+<div >                    
+    <div  style="margin-bottom:10px;">
+         <button type="submit" > Enviar </button>
+    </div> 
+</div>
+</form>
+
+{% endif %}
+<font color="red">*Apenas formato CSV separados por ; </font>
+<br>
+<font color="purple">** UTILIZAR CAIXA ALTA NOS VALORES DOS CAMPOS </font>
+ <font color="blue">EX:.COD_SETOR;TIPO;TITULO;NOM_SEGLOGR;NUM_QUADRA;NUM_FACE;NUM_ENDERECO;DSC_MODIFICADOR;COMP_1;VAL_1;COMP_2;VAL_2;COMP_3;VAL_3;COMP_4;VAL_4;COMP_5;VAL_5;ESPECIE
+ </font>
+
+</div>
+
+</section>
+
+</div>
+
+
+</BODY>
+
+</HTML>
